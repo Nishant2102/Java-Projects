@@ -1,15 +1,116 @@
+import utilities.list.LinkedList;
 
 public class Program {
+	
+
+	public static void addEmployee(LinkedList<Employee> employeeList)
+	{
+		final int MENU_ADD_MANAGER=1;
+		final int MENU_ADD_ENGINEER=2;
+		final int MENU_ADD_SALESPERSON=3;
+		final int EXIT=4;
+		
+		
+		int choiceEmp=0;
+		
+		
+		while(choiceEmp!=4) {
+			
+			System.out.println("Enter Choice: \r\n"
+					+ "1. Manager \r\n"
+					+ "2. Engineer \r\n"
+					+ "3. Sales person \r\n"
+					+ "4. Exit \r\n");
+		
+			choiceEmp = ConsoleInput.getInteger();
+			switch(choiceEmp) {
+				case MENU_ADD_MANAGER:{
+					
+					System.out.println("Enter Name :");
+					String name=ConsoleInput.getString();
+					
+					System.out.println("Enter Address :");
+					String address=ConsoleInput.getString();
+					
+					System.out.println("Enter Age :");
+					int age=ConsoleInput.getInteger();
+					
+					System.out.println("Enter Gender (Male true/ Female False) :");
+					boolean gender=ConsoleInput.getBoolean();
+					
+					System.out.println("Enter Basic Salary :");
+					float basicSalary=ConsoleInput.getFloat();
+					
+					
+					System.out.println("HRA :");
+					
+					float hra=ConsoleInput.getFloat();
+					
+					employeeList.add(new Manager(name, address, age , gender , basicSalary,hra));
+				}
+					break;
+				case MENU_ADD_ENGINEER:
+				{
+					System.out.println("Enter Name :");
+					String name=ConsoleInput.getString();
+					
+					System.out.println("Enter Address :");
+					String address=ConsoleInput.getString();
+					
+					System.out.println("Enter Age :");
+					int age=ConsoleInput.getInteger();
+					
+					System.out.println("Enter Gender (Male true/ Female False) :");
+					boolean gender=ConsoleInput.getBoolean();
+					
+					System.out.println("Enter Basic Salary :");
+					float basicSalary=ConsoleInput.getFloat();
+					
+					System.out.println("Over Time :");
+					
+					float overTime=ConsoleInput.getFloat();
+					
+					employeeList.add(new Engineer(name, address, age , gender , basicSalary,overTime));
+				}
+					break;
+				case MENU_ADD_SALESPERSON:
+				{
+					System.out.println("Enter Name :");
+					String name=ConsoleInput.getString();
+					
+					System.out.println("Enter Address :");
+					String address=ConsoleInput.getString();
+					
+					System.out.println("Enter Age :");
+					int age=ConsoleInput.getInteger();
+					
+					System.out.println("Enter Gender (Male true/ Female False) :");
+					boolean gender=ConsoleInput.getBoolean();
+					
+					System.out.println("Enter Basic Salary :");
+					float basicSalary=ConsoleInput.getFloat();
+					System.out.println("Commission :");
+					
+					float commission=ConsoleInput.getFloat();
+					
+					employeeList.add(new SalesPerson(name, address, age , gender , basicSalary,commission));
+			}
+					
+					break;
+				case EXIT:
+					System.out.println("Employee Added");
+					break;
+				default:
+					System.out.println("Invaild Choice!");
+			}
+		}
+	}
+	
 
 	public static void main(String[] args) {
-		Manager [] arrManager = new Manager[60];
-		Engineer [] arrEngineer = new Engineer[60];
-		SalesPerson[] arrSalesPerson = new SalesPerson[60];
-		Employee[] arrEmp = new Employee[180];
 		
-		int countM=0;
-		int countE=0;
-		int countS=0;
+		LinkedList<Employee> employeeList = new LinkedList<Employee>();
+		
 		
 		
 		int choice=0;
@@ -25,53 +126,14 @@ public class Program {
 			switch(choice) {
 			
 			case 1:
-			{
-				int choiceEmp=0;
-				
-				
-				while(choiceEmp!=4) {
-					
-					System.out.println("Enter Choice: \r\n"
-							+ "1. Manager \r\n"
-							+ "2. Engineer \r\n"
-							+ "3. Sales person \r\n"
-							+ "4. Exit \r\n");
-				
-					choiceEmp = ConsoleInput.getInteger();
-					switch(choiceEmp) {
-					case 1:
-						arrManager[countM]=new Manager();
-						arrManager[countM++].addEmployee();
-						
-						
-						break;
-					case 2:
-						arrEngineer[countE]=new Engineer();
-						arrEngineer[countE++].addEmployee();
-						
-						break;
-					case 3:
-						arrSalesPerson[countS]=new SalesPerson();
-						arrSalesPerson[countS++].addEmployee();
-						
-						break;
-					case 4:
-						System.out.println("Employee Added! ");
-						break;
-					default:
-						System.out.println("Invalid choice!");
-						break;
-					}
-				}
-			}
-				
+				addEmployee(employeeList);
 				break;
 			case 2:
 			{
 				int choiceEmp=0;
 				
 				
-				while(choiceEmp!=4) {
+				while(choiceEmp!=6) {
 					System.out.println("Enter Choice: \r\n"
 							+"1. All Employees" 
 							+"2. First Employee" 
@@ -84,58 +146,58 @@ public class Program {
 					switch(choiceEmp) {
 					case 1:
 					{	
-						Operations.addInEmp(arrEmp, arrManager, arrEngineer, arrSalesPerson, countM, countE, countS);
-						int totalCount = countM + countE + countS;
-						Operations.sortEmpDesc(arrEmp, totalCount);
-						int count = countM+countE+countS;
-						for(int i =0; i<count; i++) {
-							arrEmp[i].display();
-						}
+						Employee temp = employeeList.getFirst();
+						while (temp != null) {
+                            System.out.println(temp);
+                            System.out.println("Total Salary: " + temp.getTotalSalary());
+
+                            temp = employeeList.getNext();
+                        }
 					}
-						
 						break;
 					case 2:
-					{	Operations.addInEmp(arrEmp, arrManager, arrEngineer, arrSalesPerson, countM, countE, countS);
-						int totalCount = countM + countE + countS;
-						Operations.sortEmpDesc(arrEmp, totalCount);
-						arrEmp[0].display();
-						
+					{
+						Employee temp = employeeList.getFirst();
+						if (temp != null) {
+							System.out.println(temp);
+							System.out.println("Total Salary: " + temp.getTotalSalary());
+						} else {
+							System.out.println("List is empty.");
+						}
 					}
-					
 					break;
 					case 3:
-					{	Operations.addInEmp(arrEmp, arrManager, arrEngineer, arrSalesPerson, countM, countE, countS);
-						int totalCount = countM + countE + countS;
-						Operations.sortEmpDesc(arrEmp, totalCount);
-						
-						int count = countM+countE+countS;
-						for(int i =0; i<count; i++) {
-							arrEmp[count].display();
+					{
+						Employee temp = employeeList.getNext();
+						if (temp != null) {
+							System.out.println(temp);
+							System.out.println("Total Salary: " + temp.getTotalSalary());
+						} else {
+							System.out.println("No next element.");
 						}
 					}
-					
 					break;
 					case 4:
-					{	Operations.addInEmp(arrEmp, arrManager, arrEngineer, arrSalesPerson, countM, countE, countS);
-						int totalCount = countM + countE + countS;
-						Operations.sortEmpDesc(arrEmp, totalCount);
-						int count = countM+countE+countS;
-						for(int i =0; i<count; i++) {
-							arrEmp[count].display();
+						{
+							Employee temp = employeeList.getPrevious();
+							if (temp != null) {
+								System.out.println(temp);
+								System.out.println("Total Salary: " + temp.getTotalSalary());
+							} else {
+								System.out.println("No next element.");
+							}
 						}
-					}
-					
 					break;
 					case 5:
-						Operations.addInEmp(arrEmp, arrManager, arrEngineer, arrSalesPerson, countM, countE, countS);
-						int totalCount = countM + countE + countS;
-						Operations.sortEmpDesc(arrEmp, totalCount);
-						for (int i = 0; i < totalCount; i++) {
-					        arrEmp[i].display();
-					    
-					    break;
+					{
+						Employee temp = employeeList.getLast();
+						if (temp != null) {
+							System.out.println(temp);
+							System.out.println("Total Salary: " + temp.getTotalSalary());
+						} else {
+							System.out.println("No next element.");
+						}
 					}
-					
 					break;
 					case 6:
 						System.out.println("-------------------------------------- ");
@@ -155,49 +217,102 @@ public class Program {
 				
 				while(choiceEmp!=4) {
 					System.out.println("Enter Choice: \r\n"
-							+ "1. Manager \r\n"
-							+ "2. Engineer \r\n"
-							+ "3. Sales person \r\n"
+							+ "1. All Manager \r\n"
+							+ "2. All Engineer \r\n"
+							+ "3. All Sales person \r\n"
+							+ "4. All Employees Alphabetic order ascending \r\n"
+							+ "5. All Employees Alphabetic order descending \r\n"
 							+ "4. Exit \r\n");
 				
 					choiceEmp = ConsoleInput.getInteger();
 					switch(choiceEmp) {
 					case 1:
-						{Employee [] temp= arrManager;
-						Operations.sortEmp(temp,countM);
-						
-						for(int i =0; i<countM; i++) {
-							arrManager[i].display();
+						{
+						if (employeeList.getMaxCount() == 0) {
+					        System.out.println("No employees to sort!");
+					    } else {
+					        Operations.sortLinkedList(employeeList);
+						}
+						Employee temp = employeeList.getFirst();
+						while(temp!=null) {
+							if(temp  instanceof Manager) {
+								System.out.println(temp);
+								System.out.println("Total Salary: " + temp.getTotalSalary());
+								
+							}
+							temp = employeeList.getNext();
 						}
 						}
 						break;
 					case 2:
-						{Employee [] temp= arrEngineer;
-						Operations.sortEmp(temp,countE);
-						for(int i =0; i<countE; i++) {
-							arrEngineer[countE].display();
+					{
+						if (employeeList.getMaxCount() == 0) {
+					        System.out.println("No employees to sort!");
+					    } else {
+					        Operations.sortLinkedList(employeeList);
 						}
+						Employee temp = employeeList.getFirst();
+						while(temp!=null) {
+							if(temp  instanceof Engineer) {
+								System.out.println(temp);
+								System.out.println("Total Salary: " + temp.getTotalSalary());
+								
+							}
+							temp = employeeList.getNext();
 						}
+					}
 						
 						break;
 					case 3:
-						{Employee [] temp= arrSalesPerson;
-						Operations.sortEmp(temp,countS);
-						for(int i =0; i<countS; i++) {
-							arrSalesPerson[countS].display();
+					{
+						if (employeeList.getMaxCount() == 0) {
+					        System.out.println("No employees to sort!");
+					    } else {
+					        Operations.sortLinkedList(employeeList);
 						}
+						Employee temp = employeeList.getFirst();
+						while(temp!=null) {
+							if(temp  instanceof SalesPerson) {
+								System.out.println(temp);
+								System.out.println("Total Salary: " + temp.getTotalSalary());
+								
+							}
+							temp = employeeList.getNext();
 						}
 						
+					}
 						break;
 					case 4:
-						{Employee [] temp= arrEmp;
-						Operations.sortEmp(temp,countM+countE+countS);}
+						{
+						if (employeeList.getMaxCount() == 0) {
+					        System.out.println("No employees to sort!");
+					    } else {
+					        Operations.sortLinkedList(employeeList);
+						}
 						
+						Employee temp = employeeList.getFirst();
+						while(temp!=null) {
+							System.out.println(temp);
+							System.out.println("Total Salary: " + temp.getTotalSalary());
+							temp = employeeList.getNext();
+						}
+						}
 						break;
 					case 5:
-						{Employee [] temp= arrSalesPerson;
-						Operations.sortEmpDesc(temp,countM+countE+countS);}
+					{
+						if (employeeList.getMaxCount() == 0) {
+					        System.out.println("No employees to sort!");
+					    } else {
+					        Operations.sortLinkedListDesc(employeeList);
+						}
 						
+						Employee temp = employeeList.getFirst();
+						while(temp!=null) {
+							System.out.println(temp);
+							System.out.println("Total Salary: " + temp.getTotalSalary());
+							temp = employeeList.getNext();
+						}
+						}
 						break;
 						
 					case 6:
@@ -210,11 +325,13 @@ public class Program {
 				}
 				 break;
 			case 4:
-				
+				System.out.println("Feature Not Available!");
 				break;
 			case 5:
+				System.out.println("Feature Not Available!");
 				break;
 			case 6:
+				System.out.println("Feature Not Available!");
 				break;
 			default:
 				System.out.println("Invalid choice!");

@@ -6,45 +6,43 @@ public abstract class Employee {
 	protected int age;
 	protected boolean gender;
 	protected float basicSalary;
+	protected  float totalSalary;
 	
-	public Employee() {
-		
-	}
+	
 	public Employee(String name, String address, int age , boolean gender , float basicSalary) {
-		this.name=name;
-		this.address=address;
-		this.age=age;
-		this.gender=gender;
-		this.basicSalary=basicSalary;
+		
+		setName(name);
+		setAddress(address);
+		setAge(age);
+		setGender(gender);
+		setBasicSalary(basicSalary);
 	}
 
-	private String getName() {
+	public String getName() {
 		return name;
 	}
 
 	private void setName(String name) {
-		if(name.length()>3){
-			this.name = name;
-		}
+		this.name = (name != null && name.length() > 3) ? name : "Unknown";
 	}
 
-	private String getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
 	private void setAddress(String address) {
-		if(address.length()>5) this.address = address;
+		this.address = (address != null) ? address : "Not Provided";
 	}
 
-	private int getAge() {
+	public int getAge() {
 		return age;
 	}
 
 	private void setAge(int age) {
-		if(age>18) this.age = age;
+		this.age = (age > 18) ? age : 18;
 	}
 
-	private boolean getGender() {
+	public boolean getGender() {
 		return gender;
 	}
 
@@ -52,18 +50,33 @@ public abstract class Employee {
 		this.gender = gender;
 	}
 
-	private float getBasicSalary() {
+	public float getBasicSalary() {
 		return basicSalary;
 	}
 
 	private void setBasicSalary(float basicSalary) {
-		if(basicSalary>10000) this.basicSalary = basicSalary;
+		this.basicSalary = (basicSalary > 10000) ? basicSalary : 10000;
 	}
 	
-	public abstract float totalSalary();
-	public abstract void display();
+	public float getTotalSalary() {
+		return totalSalary;
+	}
+	
+	public abstract void totalSalary() ;
+	
+	public String toString()
+	{
+		StringBuffer empDetails = new StringBuffer();
+		empDetails.append("Name is: ").append(this.name);
+		empDetails.append(" | Address is: ").append(this.address);
+		empDetails.append(" | Age: ").append(this.age);
+		empDetails.append(" | Gender: ").append(this.gender ? "Male" : "Female");
+		empDetails.append(" | Basic Salary: ").append(this.basicSalary);
+		
+		return empDetails.toString();
+	}
 	
 	
-//	public abstract void addEmployee(Employee arrEmp[]);
+
 	
 }
