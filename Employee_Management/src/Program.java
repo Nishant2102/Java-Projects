@@ -1,10 +1,17 @@
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import utilities.list.LinkedList;
+import utilities.list.LinkedListException;
 
 public class Program {
 	
-
+	
 	public static void addEmployee(LinkedList<Employee> employeeList)
 	{
+		
 		final int MENU_ADD_MANAGER=1;
 		final int MENU_ADD_ENGINEER=2;
 		final int MENU_ADD_SALESPERSON=3;
@@ -107,11 +114,11 @@ public class Program {
 	}
 	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws LinkedListException, FileNotFoundException, IOException, ClassNotFoundException {
 		
 		LinkedList<Employee> employeeList = new LinkedList<Employee>();
 		
-		
+		File objFile = new File("E:\\javaseProjects\\Encryption\\Employee.txt");
 		
 		int choice=0;
 		while(choice!=6) {
@@ -134,7 +141,8 @@ public class Program {
 				
 				
 				while(choiceEmp!=6) {
-					System.out.println("Enter Choice: \r\n"
+					try{
+						System.out.println("Enter Choice: \r\n"
 							+"1. All Employees" 
 							+"2. First Employee" 
 							+"3. Next Employee" 
@@ -206,13 +214,16 @@ public class Program {
 						System.out.println("Invalid choice!");
 						break;
 					}
+					}catch(LinkedListException e) {
+						e.getMessage();
+					}
 				}
 			}
 				break;
 			
 			case 3:
 				
-				int choiceEmp=0;
+				try{int choiceEmp=0;
 				
 				
 				while(choiceEmp!=4) {
@@ -323,15 +334,23 @@ public class Program {
 						break;
 					}
 				}
+				} catch(LinkedListException e) {
+					e.getMessage();
+				}
 				 break;
 			case 4:
-				System.out.println("Feature Not Available!");
+				Operations.writeDataIntoFile(objFile, employeeList);
 				break;
 			case 5:
-				System.out.println("Feature Not Available!");
+				try{
+					Operations.readFromFile(objFile, employeeList);
+				}
+				catch(EOFException e) {
+					e.getMessage();
+				}
 				break;
 			case 6:
-				System.out.println("Feature Not Available!");
+				System.out.println("Thanks for using!");
 				break;
 			default:
 				System.out.println("Invalid choice!");

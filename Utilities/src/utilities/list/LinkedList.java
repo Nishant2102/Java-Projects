@@ -1,10 +1,15 @@
 package utilities.list;
 
-public class LinkedList <T>{
+import utilities.list.LinkedListException;
+import utilities.list.ManipulateList;
+import utilities.list.TraverseList;
+import utilities.list.LinkedList;
+
+public class LinkedList <T> implements TraverseList<T>, ManipulateList<T>{
 	
-	private Node<T> start;
-	private Node<T> current;
-	private Node<T> end;
+	Node<T> start;
+	Node<T> current;
+	Node<T> end;
 	
 	private int maxCount;
 	
@@ -30,10 +35,9 @@ public class LinkedList <T>{
         return maxCount;
     }
 	
-	public void delete (int index)
+	public void delete (int index) throws LinkedListException
 	{
-		if(start == null || index > maxCount -1)
-			return;
+		if(start == null || index > maxCount -1) throw new LinkedListException("Invalid index or empty list.");
 		if(start == end)
 			start = end = current = null;
 		else if(index==0)
@@ -58,10 +62,11 @@ public class LinkedList <T>{
 		}
 		maxCount--;
 	}
-	public T getFirst()
+	
+	public T getFirst() throws LinkedListException
 	{
 		if(start == null)
-			return null;
+			throw new LinkedListException("Empty list.");
 		
 		current = start;
 		
@@ -69,11 +74,10 @@ public class LinkedList <T>{
 	}
 	
 	
-	
-	public T getLast()
+	public T getLast() throws LinkedListException
 	{
-		if(start == null)
-			return null;
+		if(start == null) throw new LinkedListException("Empty list.");
+			
 		
 		current = end;
 		
@@ -81,10 +85,10 @@ public class LinkedList <T>{
 			
 	}
 	
-	public T getNext()
+	public T getNext() throws LinkedListException
 	{
-		if(start==null || current.next == null)
-			return null;
+		if(start==null || current.next == null) throw new LinkedListException("Empty List or Currently at last element.");
+			
 		else
 		{
 			current = current.next;
@@ -93,63 +97,25 @@ public class LinkedList <T>{
 	}
 	
 	
-	
-	public T getPrevious()
+	public T getPrevious() throws LinkedListException
 	{
-		if(start == null || current.previous == null)
-			return null;
+		if(start == null || current.previous == null) throw new LinkedListException("Empty List or Currently at starting element.");
 		else
 		{
 			current = current.previous;
 			return current.data;
 		}
 	}
-	
-//	public Node<T> getFirstNode()
-//	{
-//		if(start == null)
-//			return null;
-//		
-//		current = start;
-//		
-//		return current;
-//	}
-//	
-//	public Node<T> getNextNode(Node<T> Node)
-//	{
-//		Node<T> temp = current;
-//		if(start==null || current.next == null)
-//			return null;
-//		else
-//		{
-//			temp = temp.next;
-//			return temp;
-//		}
-//	}
-//	
-//	public Node<T> getPreviousNode(Node<T> Node)
-//	{
-//		Node<T> temp = current;
-//		if(start == null || current.previous == null)
-//			return null;
-//		else
-//		{
-//			temp = temp.previous;
-//			return temp;
-//		}
-//	}
-//	
-//	
-//	public void swapNodeData(Node<T> node1, Node<T> node2) {
-//	    if (node1 == null || node2 == null || node1 == node2) {
-//	        return;
-//	    }
-//
-//	    T temp = node1.data;
-//	    node1.data = node2.data;
-//	    node2.data = temp;
-//	}
 
 	
 
+	
+	
+	
 }
+
+
+
+
+
+
