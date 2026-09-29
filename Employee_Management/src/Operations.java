@@ -1,8 +1,48 @@
-import utilities.list.*;
-public class Operations {
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
+import utilities.list.LinkedList;
+import utilities.list.LinkedListException;
+import utilities.list.Node;
+
+public class Operations {
 	
-	public static void sortLinkedList(LinkedList<Employee> employeeList) {
+public static void writeDataIntoFile(File objFile, LinkedList<Employee> employeeList) throws FileNotFoundException, IOException, LinkedListException {
+		
+		try(FileOutputStream fileStream= new FileOutputStream(objFile); ObjectOutputStream objData = new ObjectOutputStream(fileStream)){
+			if(objFile.exists()) {
+				System.out.println("File Already Exists.");
+			}
+			else {
+				System.out.println("Creating a new file.");
+				objFile = new File("E:\\javaseProjects\\Encryption\\Employee.txt");
+			}
+			
+			Employee temp=employeeList.getFirst();
+			while(temp!=null) {
+				objData.writeObject(temp);
+				temp=employeeList.getNext();
+			}
+		}
+}
+	public static void readFromFile(File objFile, LinkedList<Employee> employeeList) throws IOException, ClassNotFoundException {
+		try(FileInputStream inStream = new FileInputStream(objFile); ObjectInputStream objData= new ObjectInputStream(inStream)){
+			if(!objFile.exists()) throw new FileNotFoundException();
+			
+			while(true) {
+				Employee temp=(Employee)objData.readObject();
+				employeeList.add(temp);
+				System.out.println(temp);
+			}
+		}
+	}
+	
+	public static void sortLinkedList(LinkedList<Employee> employeeList) throws LinkedListException {
 		Node<Employee> current=employeeList.getHeadNode();
 		Node<Employee> index;
 		Employee temp;
@@ -25,7 +65,7 @@ public class Operations {
 		System.out.println("Employee list sorted by Name!");
 	}
 	
-	public static void sortLinkedListDesc(LinkedList<Employee> employeeList) {
+	public static void sortLinkedListDesc(LinkedList<Employee> employeeList) throws LinkedListException {
 		Node<Employee> current=employeeList.getHeadNode();
 		Node<Employee> index;
 		Employee temp;
@@ -77,5 +117,7 @@ public class Operations {
 			}
 		}
 	}
+	
+	
 	
 }
